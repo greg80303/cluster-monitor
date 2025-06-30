@@ -50,7 +50,6 @@ spec:
   rules:
   - http:
       paths:
-      # TODO(kenji): Fix this.
       - path: /llmariner.clustermonitor.server.v1.ClusterMonitorWorkerService
         pathType: Prefix
         backend:
