@@ -236,6 +236,9 @@ func getGroupingValue(clusterName string, node *v1.ClusterSnapshot_Node, groupBy
 	case v1.ListClusterSnapshotsRequest_GROUP_BY_CLUSTER:
 		return clusterName, nil
 	case v1.ListClusterSnapshotsRequest_GROUP_BY_PRODUCT:
+		if node.NvidiaAttributes == nil {
+			return "unknown", nil
+		}
 		return node.NvidiaAttributes.Product, nil
 	default:
 		return "", status.Errorf(codes.InvalidArgument, "invalid value to groupBy: %v", groupBy)
