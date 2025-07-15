@@ -80,6 +80,19 @@ func (ws *WS) processGPUTelemetry(
 	clusterInfo *auth.ClusterInfo,
 	gtProto *v1.GpuTelemetry,
 ) error {
-	// TODO(kenji): Implement this.
+	msg, err := proto.Marshal(gtProto)
+	if err != nil {
+		return err
+	}
+
+	gsh := &store.GPUTelemetryHistory{
+		ClusterID:        clusterInfo.ClusterID,
+		Message:          msg,
+		HistoryCreatedAt: time.Now(),
+	}
+	if err := ws.store.CreateGPUTelemetryHistory(gsh); err != nil {
+		return err
+	}
+
 	return nil
 }
